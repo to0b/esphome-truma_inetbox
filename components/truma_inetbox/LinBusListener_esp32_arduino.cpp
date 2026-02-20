@@ -17,7 +17,6 @@ static const char *const TAG = "truma_inetbox.LinBusListener";
 void LinBusListener::setup_framework() {
   // uartSetFastReading
   auto uartComp = static_cast<ESPHOME_UART *>(this->parent_);
-
   uart_port_t uart_num = static_cast<uart_port_t>(uartComp->get_hw_serial_number());
 
   // Tweak the fifo settings so data is available as soon as the first byte is recieved.
@@ -47,12 +46,12 @@ void LinBusListener::setup_framework() {
 
   // Creating LIN msg event Task
   xTaskCreatePinnedToCore(LinBusListener::eventTask_,
-                          "lin_event_task",                       // name
-                          ARDUINO_SERIAL_EVENT_TASK_STACK_SIZE,   // stack size (in words)
-                          this,                                   // input params
-                          2,                                      // priority
-                          &this->eventTaskHandle_,                // handle
-                          ARDUINO_SERIAL_EVENT_TASK_RUNNING_CORE  // core
+                          "lin_event_task",         // name
+                          ARDUINO_SERIAL_EVENT_TASK_STACK_SIZE,                     // stack size (in words)
+                          this,                     // input params
+                          2,                        // priority
+                          &this->eventTaskHandle_,  // handle
+                          ARDUINO_SERIAL_EVENT_TASK_RUNNING_CORE                         // core
   );
 
   if (this->eventTaskHandle_ == NULL) {
